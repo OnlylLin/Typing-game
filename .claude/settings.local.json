@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh auth:*)",
+      "Bash(winget install:*)",
+      "Bash(gh repo:*)",
+      "Bash(\"C:/Program Files/GitHub CLI/gh.exe\" repo create Typing-game --public --description \"A typing game project\")"
+    ]
+  }
+}
