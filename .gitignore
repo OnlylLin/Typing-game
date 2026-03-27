@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# User data (keep structure but not personal stats)
+stats.json
+custom_words.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude
+.claude/
