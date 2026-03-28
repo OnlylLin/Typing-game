@@ -404,7 +404,12 @@ def realtime_type(target, mode_label="", ghost_wpm=0, allow_pause=False,
 
     typed   = []
     start_t = None
-    LINES   = 5  # 目标 + 输入 + 幽灵进度 + 统计 + 提示
+    # LINES 动态计算：
+    # 基础：目标(1) + 输入(1) + 统计(1) + 提示(1) = 4行
+    # 幽灵：空行(1) + 你进度(1) + 鬼进度(1) = 3行
+    BASE_LINES = 4
+    GHOST_LINES = 3 if ghost_wpm > 0 else 0
+    LINES = BASE_LINES + GHOST_LINES
 
     # 扩展属性
     realtime_type.max_combo = 0
@@ -473,18 +478,20 @@ def realtime_type(target, mode_label="", ghost_wpm=0, allow_pause=False,
         # === 幽灵进度（增强版） ===
         ghost_str = ""
         ghost_visual = ""
-        if ghost_wpm > 0 and start_t:
-            # 橡皮筋机制
-            if correct_chars > 0:
-                current_wpm = int((correct_chars / 5) / (elapsed_time / 60))
-                if current_wpm > dynamic_ghost_wpm + 3:
-                    dynamic_ghost_wpm += 0.5
-                elif current_wpm < dynamic_ghost_wpm - 3:
-                    dynamic_ghost_wpm -= 0.5
-                dynamic_ghost_wpm = max(ghost_wpm * 0.7, min(dynamic_ghost_wpm, ghost_wpm * 1.3))
-
+        if ghost_wpm > 0:
             # 计算幽灵位置
-            ghost_chars = int((dynamic_ghost_wpm * 5) * (elapsed_time / 60))
+            ghost_chars = 0
+            if start_t and elapsed_time > 0:
+                # 橡皮筋机制
+                if correct_chars > 0:
+                    current_wpm = int((correct_chars / 5) / (elapsed_time / 60))
+                    if current_wpm > dynamic_ghost_wpm + 3:
+                        dynamic_ghost_wpm += 0.5
+                    elif current_wpm < dynamic_ghost_wpm - 3:
+                        dynamic_ghost_wpm -= 0.5
+                    dynamic_ghost_wpm = max(ghost_wpm * 0.7, min(dynamic_ghost_wpm, ghost_wpm * 1.3))
+
+                ghost_chars = int((dynamic_ghost_wpm * 5) * (elapsed_time / 60))
 
             # 进度条对比
             p_bar, g_bar, diff_str = ghost_progress_bar(len(tt), ghost_chars, tl, width=25)
@@ -610,7 +617,7 @@ def realtime_type(target, mode_label="", ghost_wpm=0, allow_pause=False,
 
             # Error Flash
             if is_new_error:
-                sys.stdout.write(f"{C.BG_RED} {c('目标', C.BBLACK)}: {tgt_d} {C.RESET}\n")
+                sys.stdout.write(f"{C.BG_RED} {c('目标', C.BBLACK)}: {tgt_d}{hint_suffix} {C.RESET}\n")
                 sys.stdout.write(f"{C.BG_RED} {c('输入', C.BBLACK)}: {inp_d} {C.RESET}\n")
                 sys.stdout.write(f"{C.BG_RED}{ghost_d if ghost_d else ''}{C.RESET}\n")
                 sys.stdout.write(f"{C.BG_RED}{stats_d}{C.RESET}\n")
@@ -619,7 +626,7 @@ def realtime_type(target, mode_label="", ghost_wpm=0, allow_pause=False,
                 time.sleep(0.04)
                 sys.stdout.write((move_up() + move_to_col1() + clear_line()) * LINES)
 
-            sys.stdout.write(f" {c('目标', C.BBLACK)}: {tgt_d}\n")
+            sys.stdout.write(f" {c('目标', C.BBLACK)}: {tgt_d}{hint_suffix}\n")
             sys.stdout.write(f" {c('输入', C.BBLACK)}: {inp_d}\n")
             sys.stdout.write(f"{ghost_d if ghost_d else ''}\n")
             sys.stdout.write(f"{stats_d}\n")

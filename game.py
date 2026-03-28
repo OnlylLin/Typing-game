@@ -1,16 +1,17 @@
 """
 MOTIP - Master Of Typing Interactivity Practice
-打字速度测试游戏 v7.0 - 模块化重构版
+打字速度测试游戏 v8.0 - 暗黑RPG版
 
 新增功能:
-  - 幽灵模式可视化进度条对比
-  - 段落挑战和渐进挑战支持暂停（按P）
-  - 错误热区预警
-  - 目标提示系统
-  - 代码模块化重构
+  - 暗黑RPG风格界面重设计
+  - 连胜加成、首次奖励、挑战奖励、随机事件系统
+  - 动态难度调整系统
+  - 进度反馈系统（升级/成就/任务进度）
+  - Boss战弱点机制、新技能、限时挑战
+  - 词汇库扩充（CET4/6 + 场景词汇）
 """
 
-from ui import c, C, DarkTheme, bar_fg, exp_bar, separator, wpm_color, acc_color, clear_screen, get_rpg_title, ascii_wpm_chart
+from ui import c, C, DarkTheme, bar_fg, exp_bar, separator, wpm_color, acc_color, clear_screen, get_rpg_title, ascii_wpm_chart, hp_bar
 from data import (
     ACHIEVEMENTS, SKILLS, DAILY_TASKS,
     load_stats, save_stats, load_config, save_config, get_level, check_daily_reset
@@ -24,8 +25,29 @@ from modes import (
 
 # ==================== 菜单显示 ====================
 
+import re
+
+def _display_width(s):
+    """计算字符串显示宽度（中文=2，英文=1，ANSI转义码=0）"""
+    # 先移除ANSI转义码
+    ansi_escape = re.compile(r'\033\[[0-9;]*m')
+    clean = ansi_escape.sub('', str(s))
+    width = 0
+    for ch in clean:
+        if '\u4e00' <= ch <= '\u9fff' or '\u3000' <= ch <= '\u303f':
+            width += 2
+        else:
+            width += 1
+    return width
+
+def _pad_line(content, total_width=58):
+    """填充行到指定宽度"""
+    current = _display_width(content)
+    padding = total_width - current
+    return content + " " * max(0, padding)
+
 def show_menu(stats):
-    """显示主菜单"""
+    """显示主菜单（暗黑RPG风格）"""
     check_daily_reset(stats)
     save_stats(stats)
 
@@ -36,43 +58,90 @@ def show_menu(stats):
     tasks_done  = sum(1 for t in DAILY_TASKS if daily.get("tasks", {}).get(t["id"]))
     tasks_total = len(DAILY_TASKS)
 
-    print(separator("═"))
-    print(c("  __  __  ___  ___   _   _    ___ ___ ", C.BCYAN, C.BOLD))
-    print(c(" |  \\/  |/ _ \\|  _ \\| | | |  / __|_ _|", C.CYAN))
-    print(c(" | |\\/| | | | | |_) | |_| | | (_ || |  v7.0", C.BCYAN))
-    print(c(" |_|  |_|_| |_|  __/ \\___/   \\___|___|", C.CYAN))
-    print(c("              |_|   打字速度测试  旗舰版", C.BBLACK))
-    print(separator("─"))
+    # 获取动态难度
+    from data import get_adaptive_difficulty, DynamicDifficulty
+    try:
+        current_difficulty = get_adaptive_difficulty(stats)
+        dd = DynamicDifficulty(stats)
+        diff_name = dd.get_difficulty_name(current_difficulty)
+        diff_color = dd.get_difficulty_color(current_difficulty)
+    except:
+        current_difficulty = 2.5
+        diff_name = "中级"
+        diff_color = C.BYELLOW
+
+    BW = 60  # 边框内部宽度
+
+    print(c("╔" + "═" * BW + "╗", DarkTheme.SOUL_BLUE))
+    print()
+    print(c("       ███╗   ███╗ ██████╗ ██████╗  ██████╗", DarkTheme.FIRE_ORANGE, C.BOLD))
+    print(c("       ████╗ ████║██╔═══██╗██╔══██╗██╔═══██╗", DarkTheme.FIRE_ORANGE) + "    " + c("MOTIP v8.0", DarkTheme.GOLD_YELLOW, C.BOLD))
+    print(c("       ██╔████╔██║██║   ██║██║  ██║██║   ██║", DarkTheme.FIRE_ORANGE) + "    " + c("暗黑RPG版", C.BBLACK))
+    print(c("       ██║╚██╔╝██║██║   ██║██║  ██║██║   ║", DarkTheme.FIRE_ORANGE))
+    print(c("       ██║ ╚═╝ ██║╚██████╔╝██████╔╝╚██████╔╝", DarkTheme.FIRE_ORANGE, C.BOLD))
+    print(c("       ╚═╝     ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝", DarkTheme.FIRE_ORANGE))
+    print()
+    print(c("╠" + "═" * BW + "╣", DarkTheme.SOUL_BLUE))
+
+    # 状态面板
     title = get_rpg_title(level)
-    print(f"  {c('Lv.'+str(level)+' ['+title+']', C.BMAGENTA, C.BOLD)} {bar} {c(str(cur_exp)+'/'+str(need_exp)+'XP', C.BBLACK)}")
-    print(
-        f"  📅登录 {c(str(stats.get('login_days',0))+'天', C.BCYAN)}"
-        f"  🔥连胜 {c(str(stats.get('streak',0))+'局', C.BRED)}"
-        f"  ⚡最高 {c(str(stats.get('best_net_wpm',0))+'净WPM', wpm_color(stats.get('best_net_wpm',0)), C.BOLD)}"
-    )
-    task_bar    = bar_fg(tasks_done, tasks_total, width=tasks_total,
-                         full_char="●", empty_char="○",
-                         full_color=C.BGREEN, empty_color=C.BBLACK)
-    daily_ch_icon = c("✓已打卡", C.BGREEN) if daily.get("daily_ch_done") else c("★未打卡", C.BYELLOW)
-    print(
-        f"  📋今日 {c(str(daily.get('games',0))+'局', C.BCYAN)}"
-        f"  任务 {task_bar} {c(str(tasks_done)+'/'+str(tasks_total), C.BYELLOW)}"
-        f"  每日一挑 {daily_ch_icon}"
-    )
-    print(separator("─"))
-    print(f"  {c('1', C.BYELLOW)} 经典模式      {c('2', C.BYELLOW)} 极速挑战")
-    print(f"  {c('3', C.BYELLOW)} 词库练习      {c('4', C.BYELLOW)} 计时挑战")
-    print(f"  {c('5', C.BYELLOW)} 盲打模式      {c('6', C.BYELLOW)} 渐进挑战")
-    print(f"  {c('7', C.BYELLOW)} 弱键练习      {c('8', C.BYELLOW)} 每日一挑 {'✓' if daily.get('daily_ch_done') else '★'}")
-    print(f"  {c('9', C.BYELLOW)} 幽灵竞速      {c('10', C.BYELLOW)} 段落挑战")
-    print(f"  {c('11', C.BMAGENTA)} 🏰Boss关卡 ⭐NEW", C.BMAGENTA)
-    print(separator("─"))
-    print(f"  {c('s', C.BCYAN)} 数据统计   {c('k', C.BCYAN)} 技能系统   {c('a', C.BCYAN)} 成就列表")
-    print(f"  {c('c', C.BCYAN)} 设置       {c('h', C.BCYAN)} 帮助说明   {c('0', C.BRED)} 退出")
-    print(separator("═"))
+    line1 = f" Lv.{level} [{title}] {bar} {cur_exp}/{need_exp}XP"
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line(line1, BW) + c("║", DarkTheme.SOUL_BLUE))
+
+    hp_bar_str = hp_bar(80, 100, 15)[0]
+    line2 = f" 💚 HP: {hp_bar_str} 80/100"
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line(line2, BW) + c("║", DarkTheme.SOUL_BLUE))
+
+    line3 = f" 🔥连胜:{stats.get('streak',0)}局  ✨今日:{daily.get('games',0)}局  📅登录:{stats.get('login_days',0)}天  ⚡最高:{stats.get('best_net_wpm',0)}WPM"
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line(line3, BW) + c("║", DarkTheme.SOUL_BLUE))
+
+    task_bar = bar_fg(tasks_done, tasks_total, width=tasks_total,
+                      full_char="●", empty_char="○",
+                      full_color=DarkTheme.POISON_GREEN, empty_color=C.BBLACK)
+    daily_icon = "✓" if daily.get("daily_ch_done") else "★"
+
+    line4 = f" 📋任务 {task_bar} {tasks_done}/{tasks_total}  📅每日 {daily_icon}  🎯难度 {diff_name}"
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line(line4, BW) + c("║", DarkTheme.SOUL_BLUE))
+
+    print(c("╠" + "═" * BW + "╣", DarkTheme.SOUL_BLUE))
+    print()
+
+    # 基础练习区
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line(" 🎯 ═════════ 基础练习 ═════════", BW) + c("║", DarkTheme.SOUL_BLUE))
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line("    [1] ⚔️ 经典模式    [2] 📚 词库练习    [3] ⏱️ 计时挑战", BW) + c("║", DarkTheme.SOUL_BLUE))
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line("", BW) + c("║", DarkTheme.SOUL_BLUE))
+
+    # 速度挑战区
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line(" ⚡ ═════════ 速度挑战 ═════════", BW) + c("║", DarkTheme.SOUL_BLUE))
+    daily_mark = "✓" if daily.get("daily_ch_done") else "★"
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line(f"    [4] ⚡ 极速挑战    [5] 👻 幽灵竞速    [6] 📅 每日一挑{daily_mark}", BW) + c("║", DarkTheme.SOUL_BLUE))
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line("", BW) + c("║", DarkTheme.SOUL_BLUE))
+
+    # 进阶挑战区
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line(" 🔥 ═════════ 进阶挑战 ═════════", BW) + c("║", DarkTheme.SOUL_BLUE))
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line("    [7] 🦅 盲打模式    [8] 🏰 渐进挑战    [9] 📖 段落挑战", BW) + c("║", DarkTheme.SOUL_BLUE))
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line("", BW) + c("║", DarkTheme.SOUL_BLUE))
+
+    # 特殊模式区
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line(" 👹 ═════════ 特殊模式 ═════════", BW) + c("║", DarkTheme.SOUL_BLUE))
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line("    [10] 👹 Boss关卡 ⭐NEW", BW) + c("║", DarkTheme.SOUL_BLUE))
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line("    [11] 💪 弱键练习", BW) + c("║", DarkTheme.SOUL_BLUE))
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line("", BW) + c("║", DarkTheme.SOUL_BLUE))
+
+    # 系统功能
+    print(c("╠" + "═" * 28 + "╦" + "═" * 31 + "╣", DarkTheme.SOUL_BLUE))
+    left_part = " [s] 📊统计  [k] ⚡技能  [a] 🏆成就"
+    right_part = " [c] ⚙️设置  [h] ❓帮助  [0] 🚪退出"
+    left_pad = 28 - _display_width(left_part)
+    right_pad = 31 - _display_width(right_part)
+    print(c("║", DarkTheme.SOUL_BLUE) + left_part + " " * max(0, left_pad) +
+          c("║", DarkTheme.SOUL_BLUE) + right_part + " " * max(0, right_pad) + c("║", DarkTheme.SOUL_BLUE))
+
     ach_count = len(stats.get("achievements", []))
-    print(f"  成就 {c(str(ach_count)+'/'+str(len(ACHIEVEMENTS)), C.BGREEN)}"
-          f"  累计字符 {c('{:,}'.format(stats.get('total_chars',0)), C.BBLACK)}")
+    print(c("╠" + "═" * BW + "╣", DarkTheme.SOUL_BLUE))
+    line_bottom = f" 成就 {ach_count}/{len(ACHIEVEMENTS)}  累计字符 {stats.get('total_chars',0):,}"
+    print(c("║", DarkTheme.SOUL_BLUE) + _pad_line(line_bottom, BW) + c("║", DarkTheme.SOUL_BLUE))
+    print(c("╚" + "═" * BW + "╝", DarkTheme.SOUL_BLUE))
 
 
 # ==================== 统计与系统界面 ====================
@@ -401,14 +470,26 @@ def main():
     enable_ansi()
 
     funcs = {
-        "1": play_classic,       "2": play_sprint,
-        "3": play_word_practice, "4": play_timed,
-        "5": play_blind,         "6": play_gauntlet,
-        "7": play_weak_key,      "8": play_daily_challenge,
-        "9": play_ghost_race,    "10": play_paragraph,
-        "11": play_boss_stage,
-        "s": show_stats,         "k": show_skills,
-        "a": show_achievements,  "c": show_settings,
+        # 基础练习
+        "1": play_classic,         # 经典模式
+        "2": play_word_practice,   # 词库练习
+        "3": play_timed,           # 计时挑战
+        # 速度挑战
+        "4": play_sprint,          # 极速挑战
+        "5": play_ghost_race,      # 幽灵竞速
+        "6": play_daily_challenge, # 每日一挑
+        # 进阶挑战
+        "7": play_blind,           # 盲打模式
+        "8": play_gauntlet,        # 渐进挑战
+        "9": play_paragraph,       # 段落挑战
+        # 特殊模式
+        "10": play_boss_stage,     # Boss关卡
+        "11": play_weak_key,       # 弱键练习
+        # 系统功能
+        "s": show_stats,
+        "k": show_skills,
+        "a": show_achievements,
+        "c": show_settings,
         "h": show_help,
     }
 
@@ -419,7 +500,9 @@ def main():
         choice = input(c("\n请选择: ", C.BCYAN)).strip().lower()
         if choice == "0":
             clear_screen()
-            show_session_summary(load_stats())
+            stats = load_stats()
+            save_stats(stats)  # 确保退出前保存
+            show_session_summary(stats)
             print(c("\n  感谢使用 MOTIP v7.0！再见！\n", C.BCYAN, C.BOLD))
             break
         elif choice in funcs:

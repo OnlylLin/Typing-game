@@ -23,6 +23,12 @@ WORD_BANKS = {
         "refactor optimize benchmark profile latency throughput concurrency thread async await event",
         "encryption authentication authorization token session cookie middleware cors webhook",
         "recursion memoization dynamic programming greedy algorithm binary search hash table graph",
+        "blockchain cryptocurrency smart contract consensus protocol decentralized distributed ledger",
+        "serverless lambda function trigger event stream queue message broker rabbitmq kafka",
+        "graphql restful websocket grpc protocol buffer serialization deserialization schema",
+        "continuous integration deployment pipeline jenkins gitlab github actions artifact registry",
+        "monitoring observability logging tracing metrics prometheus grafana alert dashboard",
+        "redis mongodb postgresql mysql elasticsearch nosql relational database sql query index",
     ],
     "code": [
         "def function_name(param): return param",
@@ -40,6 +46,13 @@ WORD_BANKS = {
         "dict(zip(keys, values))",
         "any(x > 0 for x in nums)",
         "from functools import reduce; reduce(lambda a, b: a + b, nums)",
+        "@decorator def wrapped(): pass",
+        "class Derived(Base): def __init__(self): super().__init__()",
+        "match value: case 1: pass case _: pass",
+        "async with context_manager() as cm: await cm.do_something()",
+        "generator = (x * 2 for x in range(100) if x % 3 == 0)",
+        "dataclass decorator generates init repr eq hash methods automatically",
+        "protocol typing structural subtyping duck typing interface definition",
     ],
     "quote": [
         "code is like humor when you have to explain it it is bad",
@@ -57,6 +70,15 @@ WORD_BANKS = {
         "move fast and break things",
         "stay hungry stay foolish",
         "the only way to do great work is to love what you do",
+        "premature optimization is the root of all evil",
+        "there are only two hard things in computer science cache invalidation and naming things",
+        "good code is its own best documentation",
+        "the computer was born to solve problems that did not exist before",
+        "the function of good software is to make the complex appear simple",
+        "any sufficiently advanced technology is indistinguishable from magic",
+        "programmers are tools for converting caffeine into code",
+        "before software can be reusable it first has to be usable",
+        "it works on my machine is not a valid excuse",
     ],
     "science": [
         "the speed of light in vacuum is approximately 299792 kilometers per second",
@@ -68,6 +90,17 @@ WORD_BANKS = {
         "neurons transmit electrical signals across synapses in the brain",
         "relativity states that time dilates as velocity approaches the speed of light",
         "mitochondria generate ATP through oxidative phosphorylation in the cell",
+        "the big bang theory describes the origin of the universe from a singularity",
+        "black holes have gravitational fields so strong that light cannot escape",
+        "evolution by natural selection explains the diversity of life on earth",
+        "the human genome contains approximately three billion base pairs",
+        "antibiotics work by targeting bacterial cell walls or protein synthesis",
+        "climate change is driven by increased greenhouse gas emissions",
+        "the theory of plate tectonics explains continental drift and earthquakes",
+        "stem cells can differentiate into specialized cell types in the body",
+        "vaccines train the immune system to recognize specific pathogens",
+        "CRISPR technology enables precise gene editing in living organisms",
+        "the uncertainty principle states that position and momentum cannot both be precisely known",
     ],
     "literature": [
         "it was the best of times it was the worst of times",
@@ -79,6 +112,17 @@ WORD_BANKS = {
         "we are all mad here",
         "not all those who wander are lost",
         "in the beginning was the word and the word was with god",
+        "it was a bright cold day in april and the clocks were striking thirteen",
+        "all animals are equal but some animals are more equal than others",
+        "the only thing we have to fear is fear itself",
+        "i have a dream that one day this nation will rise up",
+        "ask not what your country can do for you ask what you can do for your country",
+        "the unexamined life is not worth living",
+        "i think therefore i am",
+        "to err is human to forgive divine",
+        "the pen is mightier than the sword",
+        "a journey of a thousand miles begins with a single step",
+        "the only thing constant in life is change",
     ],
     "random": [
         "the quick brown fox jumps over the lazy dog",
@@ -91,6 +135,11 @@ WORD_BANKS = {
         "glib jocks quiz nymph to vex dwarf",
         "five quacking zephyrs jolt my wax bed",
         "the job requires extra pluck and zeal from every young wage earner",
+        "jackdaws love my big sphinx of quartz",
+        "the quick onyx goblin jumps over the lazy dwarf",
+        "crazy frederick bought many very exquisite opal jewels",
+        "we promptly judged antique ivory buckles for the next prize",
+        "a quick movement of the enemy will jeopardize six gunboats",
     ],
     "chinese": [
         "编程是一门艺术也是一门科学",
@@ -105,6 +154,26 @@ WORD_BANKS = {
         "博观而约取厚积而薄发行成于思毁于随",
         "锲而不舍金石可镂水滴石穿绳锯木断",
         "路漫漫其修远兮吾将上下而求索",
+        "学而时习之不亦说乎有朋自远方来不亦乐乎",
+        "三人行必有我师焉择其善者而从之其不善者而改之",
+        "知之为知之不知为不知是知也",
+        "工欲善其事必先利其器",
+        "敏而好学不耻下问",
+        "温故而知新可以为师矣",
+        "学而不思则罔思而不学则殆",
+        "天行健君子以自强不息地势坤君子以厚德载物",
+    ],
+    "business": [
+        "quarterly revenue profit margin fiscal year annual report financial statement",
+        "market share competitive advantage strategic partnership stakeholder value",
+        "supply chain logistics inventory management procurement vendor negotiation",
+        "human resources talent acquisition employee retention performance review",
+        "customer satisfaction net promoter score brand loyalty market segmentation",
+        "return on investment cost benefit analysis break even point cash flow projection",
+        "merger acquisition due diligence intellectual property patent trademark",
+        "agile methodology scrum sprint backlog kanban retrospective stakeholder",
+        "key performance indicator dashboard analytics data driven decision making",
+        "digital transformation automation artificial intelligence machine learning adoption",
     ],
 }
 
@@ -124,6 +193,24 @@ TEXTS = {
         "Small steps matter.",
         "Think then code.",
         "Build good habits.",
+        "Start small dream big.",
+        "Never give up hope.",
+        "Trust the process.",
+        "Embrace the journey.",
+        "Learn from mistakes.",
+        "Celebrate small wins.",
+        "Progress not perfection.",
+        "Be patient with yourself.",
+        "Focus on the present.",
+        "Challenge yourself daily.",
+        "Growth takes time.",
+        "Stay curious always.",
+        "Keep pushing forward.",
+        "Believe in yourself.",
+        "Take breaks often.",
+        "Rest is productive.",
+        "Quality over quantity.",
+        "Done is better than perfect.",
     ],
     "medium": [
         "The quick brown fox jumps over the lazy dog.",
@@ -139,6 +226,21 @@ TEXTS = {
         "Debugging is twice as hard as writing code.",
         "Programs must be written for people to read.",
         "The most important property of a program is correctness.",
+        "Technology is best when it brings people together.",
+        "Innovation distinguishes between a leader and a follower.",
+        "The only way to do great work is to love what you do.",
+        "Code never lies comments sometimes do.",
+        "First solve the problem then write the code.",
+        "Make it work make it right make it fast.",
+        "Simplicity is the ultimate sophistication.",
+        "The best code is no code at all.",
+        "Premature optimization is the root of all evil.",
+        "Programs must be written for humans to read and only incidentally for machines to execute.",
+        "Walking on water and developing software from a specification are easy if both are frozen.",
+        "The most disastrous mistake is to assume that software development is easy.",
+        "Any fool can write code that a computer can understand but good programmers write code that humans understand.",
+        "The difference between a good programmer and a great programmer is knowing when to stop.",
+        "Testing shows the presence of bugs not their absence.",
     ],
     "hard": [
         "The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs.",
@@ -148,12 +250,26 @@ TEXTS = {
         "Consistent refactoring and thoughtful architecture decisions lead to maintainable, scalable, and high-performance software systems.",
         "Distributed systems must handle network partitions, node failures, and message delays while maintaining consistency and availability.",
         "Cryptographic hash functions produce a fixed-size output from variable-length input and are designed to be collision-resistant and one-way.",
+        "Machine learning algorithms can be categorized into supervised learning unsupervised learning and reinforcement learning paradigms.",
+        "The CAP theorem states that a distributed computer system cannot simultaneously provide all three of consistency availability and partition tolerance.",
+        "Concurrency control mechanisms ensure that concurrent transactions execute without violating data integrity in multi-user database systems.",
+        "Microservices architecture decomposes applications into small independent services that communicate through well-defined APIs.",
+        "The observer pattern defines a one-to-many dependency between objects so that when one object changes state all dependents are notified.",
+        "Garbage collection is a form of automatic memory management that attempts to reclaim memory occupied by objects that are no longer in use.",
+        "Functional programming treats computation as the evaluation of mathematical functions and avoids changing state and mutable data.",
+        "The SOLID principles are five design principles intended to make software designs more understandable flexible and maintainable.",
     ],
     "paragraph": [
         "In the beginning there was chaos, and from chaos came order. The universe expanded from a singularity, cooling as it grew, forming hydrogen and helium. Stars ignited, lived, and died, seeding the cosmos with heavier elements.",
         "Software engineering is not just about writing code. It encompasses requirements analysis, system design, testing, deployment, and maintenance. A great engineer communicates clearly and thinks about the long-term impact of every decision.",
         "The art of asking the right question is more than half the battle of finding the answer. Science advances not by accumulating facts but by transforming how we think about problems, and every revolution starts with a better question.",
         "Discipline is choosing between what you want now and what you want most. Champions are made in the moments when they want to stop. Every repetition, every session, every practice builds the foundation of excellence.",
+        "The greatest glory in living lies not in never falling, but in rising every time we fall. Success is not measured by the position one has reached in life, but by the obstacles one has overcome while trying to succeed.",
+        "In the realm of software development, the pursuit of perfection often leads to paralysis. The most successful products are not those that waited until everything was perfect, but those that iterated rapidly based on real user feedback.",
+        "The relationship between complexity and reliability is inverse. As systems become more complex, they become harder to understand, test, and maintain. Simplicity is not just a virtue; it is a survival strategy.",
+        "Every expert was once a beginner. The journey from novice to master is paved with countless mistakes, endless practice, and persistent curiosity. The difference between the expert and the novice is not talent but time and dedication.",
+        "Technology shapes society in profound and often unexpected ways. The printing press democratized knowledge, the industrial revolution transformed labor, and now the digital age is redefining how we connect, work, and think.",
+        "The scientific method is humanity's most powerful tool for understanding reality. Through observation, hypothesis, experimentation, and analysis, we have uncovered the laws of nature and extended our reach to the stars.",
     ],
 }
 
@@ -226,6 +342,97 @@ DAILY_TASKS = [
     {"id": "chars_200", "desc": "单局输入超 200 字符",  "target": 200, "type": "chars",    "reward": 40},
     {"id": "daily_ch",  "desc": "完成每日一挑",         "target": 1,   "type": "daily_ch", "reward": 100},
 ]
+
+# ==================== 新增奖励系统 ====================
+
+# 连胜加成配置
+STREAK_BONUSES = {
+    3:  {"exp_mult": 1.1, "title": "三连胜",  "icon": "🔥"},
+    5:  {"exp_mult": 1.2, "title": "五连胜",  "icon": "🔥🔥"},
+    10: {"exp_mult": 1.5, "title": "十连胜",  "icon": "🔥🔥🔥"},
+    15: {"exp_mult": 1.8, "title": "十五连胜", "icon": "⚡"},
+    20: {"exp_mult": 2.0, "title": "二十连胜", "icon": "⚡⚡"},
+}
+
+# 首次奖励配置
+FIRST_REWARDS = {
+    "first_game":        {"exp": 30,  "desc": "首次完成游戏",       "icon": "🎮"},
+    "first_classic":     {"exp": 50,  "desc": "首次完成经典模式",   "icon": "⚔️"},
+    "first_sprint":      {"exp": 50,  "desc": "首次完成极速挑战",   "icon": "⚡"},
+    "first_word":        {"exp": 50,  "desc": "首次完成词库练习",   "icon": "📚"},
+    "first_timed":       {"exp": 50,  "desc": "首次完成计时挑战",   "icon": "⏱️"},
+    "first_blind":       {"exp": 80,  "desc": "首次完成盲打模式",   "icon": "🦅"},
+    "first_gauntlet":    {"exp": 100, "desc": "首次通关渐进挑战",   "icon": "🏰"},
+    "first_ghost_win":   {"exp": 100, "desc": "首次击败幽灵记录",   "icon": "👻"},
+    "first_boss":        {"exp": 150, "desc": "首次击败Boss",       "icon": "👹"},
+    "first_perfect":     {"exp": 200, "desc": "首次100%正确率",     "icon": "💎"},
+    "first_speed_100":   {"exp": 150, "desc": "首次达到100WPM",     "icon": "🚀"},
+}
+
+# 挑战奖励配置
+CHALLENGE_REWARDS = {
+    "perfect_game":      {"exp": 100, "desc": "单局100%正确率",     "icon": "💎"},
+    "speed_demon":       {"exp": 80,  "desc": "净WPM达到100",       "icon": "🚀"},
+    "combo_master":      {"exp": 50,  "desc": "单局连击达到50",     "icon": "🔥"},
+    "gauntlet_clear":    {"exp": 150, "desc": "通关渐进挑战",       "icon": "🏰"},
+    "boss_slayer":       {"exp": 100, "desc": "无伤击败Boss",       "icon": "⚔️"},
+    "ghost_crusher":     {"exp": 80,  "desc": "击败幽灵记录10次",   "icon": "👻"},
+    "daily_7_streak":    {"exp": 200, "desc": "连续7天完成每日一挑", "icon": "📅"},
+    "marathon":          {"exp": 100, "desc": "单局输入500+字符",   "icon": "🏃"},
+}
+
+# 随机事件配置
+RANDOM_EVENTS = {
+    "double_exp": {
+        "chance": 0.08,
+        "effect": "exp_mult",
+        "value": 2.0,
+        "desc": "🌟 幸运时刻：经验翻倍！",
+        "icon": "✨"
+    },
+    "bonus_exp": {
+        "chance": 0.10,
+        "effect": "bonus_exp",
+        "value": 30,
+        "desc": "💰 意外收获：+30经验！",
+        "icon": "💰"
+    },
+    "triple_combo": {
+        "chance": 0.05,
+        "effect": "combo_mult",
+        "value": 3.0,
+        "desc": "🔥 连击狂潮：连击经验×3！",
+        "icon": "🔥"
+    },
+    "easy_mode": {
+        "chance": 0.06,
+        "effect": "difficulty_down",
+        "value": 1,
+        "desc": "💚 轻松时刻：难度降低！",
+        "icon": "💚"
+    },
+    "time_gift": {
+        "chance": 0.07,
+        "effect": "time_add",
+        "value": 5,
+        "desc": "⏰ 时间馈赠：+5秒！",
+        "icon": "⏰"
+    },
+    "lucky_streak": {
+        "chance": 0.04,
+        "effect": "streak_protect",
+        "value": 1,
+        "desc": "🛡️ 幸运护盾：本局失败不中断连胜！",
+        "icon": "🛡️"
+    },
+    "golden_touch": {
+        "chance": 0.03,
+        "effect": "golden_mode",
+        "value": 1,
+        "desc": "👑 黄金之手：本局经验×1.5，必定触发随机事件！",
+        "icon": "👑"
+    },
+}
 
 STATS_FILE  = os.path.expanduser("~/.motip_stats.json")
 CONFIG_FILE = os.path.expanduser("~/.motip_config.json")
@@ -508,8 +715,9 @@ def finish_game(stats, mode, raw_wpm, raw_net_wpm, raw_acc, exp_base,
                 target="", user_input="", elapsed=0,
                 completed=0, chars=0, difficulty="medium", extra=None,
                 ghost_beat=False, is_daily_ch=False, is_para=False,
-                realtime_max_combo=0, realtime_is_perfect=True):
-    """游戏结算核心函数"""
+                realtime_max_combo=0, realtime_is_perfect=True,
+                boss_damage_taken=None):
+    """游戏结算核心函数（增强版 - 集成完整奖励系统）"""
     skills      = stats.get("skills", {k: 0 for k in SKILLS})
     streak_mult = 1 + skills.get("streak", 0) * 0.15
     exp_mult    = 1 + skills.get("exp_boost", 0) * 0.10
@@ -527,17 +735,48 @@ def finish_game(stats, mode, raw_wpm, raw_net_wpm, raw_acc, exp_base,
     else:
         stats["streak"] = 0
 
-    combo_bonus = (combo // 5) * 5
-    exp_gain    = int((exp_base * streak_mult + combo_bonus) * exp_mult)
+    # === 新奖励系统集成 ===
+    # 1. 触发随机事件
+    random_event = trigger_random_event()
+    game_state = {"exp_mult": 1.0, "bonus_exp": 0, "combo_mult": 1.0}
+    if random_event:
+        game_state = apply_event_effect(random_event, game_state)
 
-    # 完美/高连击奖励
+    # 2. 计算基础经验
+    combo_bonus = (combo // 5) * 5
+    base_exp = exp_base + combo_bonus
+
+    # 3. 使用总经验计算（含连胜加成）
+    total_exp, exp_breakdown = calculate_total_exp(base_exp, stats, game_state)
+
+    # 4. 完美/高连击/幽灵加成
     if realtime_is_perfect and target and user_input:
-        exp_gain = int(exp_gain * 1.5)
+        total_exp = int(total_exp * 1.5)
+        exp_breakdown.append(("💎 完美奖励", "x1.5"))
     elif realtime_max_combo >= 100:
-        exp_gain = int(exp_gain * 1.2)
+        total_exp = int(total_exp * 1.2)
+        exp_breakdown.append(("🔥 百连奖励", "x1.2"))
 
     if ghost_beat:
-        exp_gain = int(exp_gain * 1.5)
+        total_exp = int(total_exp * 1.5)
+        exp_breakdown.append(("👻 击败幽灵", "x1.5"))
+
+    exp_gain = total_exp
+
+    # 5. 检查首次奖励
+    first_rewards = check_first_rewards(stats, mode, net_wpm, accuracy)
+    for reward_key, reward_data in first_rewards:
+        exp_gain += reward_data["exp"]
+        exp_breakdown.append((f"🆕 {reward_data['desc']}", f"+{reward_data['exp']}"))
+
+    # 6. 检查挑战奖励
+    challenge_rewards = check_challenge_rewards(
+        stats, net_wpm=net_wpm, accuracy=accuracy, combo=combo,
+        chars=chars, ghost_beat=ghost_beat, boss_damage_taken=boss_damage_taken
+    )
+    for reward_key, reward_data in challenge_rewards:
+        exp_gain += reward_data["exp"]
+        exp_breakdown.append((f"🏆 {reward_data['desc']}", f"+{reward_data['exp']}"))
 
     old_level = stats.get("level", 1)
     stats["total_games"]   = stats.get("total_games", 0) + 1
@@ -570,6 +809,7 @@ def finish_game(stats, mode, raw_wpm, raw_net_wpm, raw_acc, exp_base,
     if completed:  record["completed"]  = completed
     if chars:      record["chars"]      = chars
     if extra:      record.update(extra)
+    if random_event: record["random_event"] = random_event["desc"]
     stats["games"].append(record)
 
     new_ach    = check_achievements(stats, wpm, net_wpm, accuracy, mode,
@@ -577,4 +817,612 @@ def finish_game(stats, mode, raw_wpm, raw_net_wpm, raw_acc, exp_base,
                                     is_daily_ch, is_para)
     daily_done = check_daily_tasks(stats, net_wpm, accuracy, len(user_input), is_daily_ch)
     save_stats(stats)
-    return new_ach, daily_done, old_level, new_level, exp_gain, combo, wpm, net_wpm, accuracy
+
+    # 返回增强的结果（包含奖励明细和随机事件）
+    reward_info = {
+        "exp_breakdown": exp_breakdown,
+        "random_event": random_event,
+        "first_rewards": first_rewards,
+        "challenge_rewards": challenge_rewards,
+        "streak_mult": streak_mult,
+    }
+    return new_ach, daily_done, old_level, new_level, exp_gain, combo, wpm, net_wpm, accuracy, reward_info
+
+
+# ==================== 新增奖励系统函数 ====================
+
+import random
+
+
+def get_streak_bonus(streak):
+    """
+    获取连胜加成
+
+    Args:
+        streak: 当前连胜局数
+
+    Returns:
+        dict: {"mult": 倍率, "title": 称号, "icon": 图标}
+    """
+    for threshold in sorted(STREAK_BONUSES.keys(), reverse=True):
+        if streak >= threshold:
+            bonus = STREAK_BONUSES[threshold]
+            return {
+                "mult": bonus["exp_mult"],
+                "title": bonus["title"],
+                "icon": bonus["icon"],
+                "threshold": threshold
+            }
+    return {"mult": 1.0, "title": "", "icon": "", "threshold": 0}
+
+
+def check_first_rewards(stats, mode, net_wpm=0, accuracy=0):
+    """
+    检查首次奖励
+
+    Args:
+        stats: 统计数据
+        mode: 游戏模式
+        net_wpm: 净WPM
+        accuracy: 正确率
+
+    Returns:
+        list: 获得的首次奖励列表
+    """
+    first_rewards_done = stats.setdefault("first_rewards", [])
+    rewards = []
+
+    # 模式首次奖励映射
+    mode_first_map = {
+        "classic": "first_classic",
+        "sprint": "first_sprint",
+        "word": "first_word",
+        "timed": "first_timed",
+        "blind": "first_blind",
+        "gauntlet": "first_gauntlet",
+    }
+
+    # 首次游戏
+    if "first_game" not in first_rewards_done:
+        rewards.append(("first_game", FIRST_REWARDS["first_game"]))
+        first_rewards_done.append("first_game")
+
+    # 模式首次
+    if mode in mode_first_map:
+        reward_key = mode_first_map[mode]
+        if reward_key not in first_rewards_done:
+            rewards.append((reward_key, FIRST_REWARDS[reward_key]))
+            first_rewards_done.append(reward_key)
+
+    # 首次100%正确率
+    if accuracy == 100 and "first_perfect" not in first_rewards_done:
+        rewards.append(("first_perfect", FIRST_REWARDS["first_perfect"]))
+        first_rewards_done.append("first_perfect")
+
+    # 首次100WPM
+    if net_wpm >= 100 and "first_speed_100" not in first_rewards_done:
+        rewards.append(("first_speed_100", FIRST_REWARDS["first_speed_100"]))
+        first_rewards_done.append("first_speed_100")
+
+    stats["first_rewards"] = first_rewards_done
+    return rewards
+
+
+def check_challenge_rewards(stats, net_wpm=0, accuracy=0, combo=0,
+                            chars=0, ghost_beat=False, boss_damage_taken=0):
+    """
+    检查挑战奖励
+
+    Args:
+        stats: 统计数据
+        net_wpm: 净WPM
+        accuracy: 正确率
+        combo: 连击数
+        chars: 字符数
+        ghost_beat: 是否击败幽灵
+        boss_damage_taken: Boss战受到的伤害
+
+    Returns:
+        list: 获得的挑战奖励列表
+    """
+    challenge_done = stats.setdefault("challenge_rewards", [])
+    rewards = []
+
+    # 完美游戏
+    if accuracy == 100 and "perfect_game" not in challenge_done:
+        rewards.append(("perfect_game", CHALLENGE_REWARDS["perfect_game"]))
+        challenge_done.append("perfect_game")
+
+    # 速度恶魔
+    if net_wpm >= 100 and "speed_demon" not in challenge_done:
+        rewards.append(("speed_demon", CHALLENGE_REWARDS["speed_demon"]))
+        challenge_done.append("speed_demon")
+
+    # 连击大师
+    if combo >= 50 and "combo_master" not in challenge_done:
+        rewards.append(("combo_master", CHALLENGE_REWARDS["combo_master"]))
+        challenge_done.append("combo_master")
+
+    # 马拉松
+    if chars >= 500 and "marathon" not in challenge_done:
+        rewards.append(("marathon", CHALLENGE_REWARDS["marathon"]))
+        challenge_done.append("marathon")
+
+    # Boss杀手（无伤）
+    if boss_damage_taken is not None and boss_damage_taken == 0 and "boss_slayer" not in challenge_done:
+        rewards.append(("boss_slayer", CHALLENGE_REWARDS["boss_slayer"]))
+        challenge_done.append("boss_slayer")
+
+    stats["challenge_rewards"] = challenge_done
+    return rewards
+
+
+def trigger_random_event():
+    """
+    触发随机事件
+
+    Returns:
+        dict or None: 触发的事件，包含effect, value, desc, icon
+    """
+    for event_id, event in RANDOM_EVENTS.items():
+        if random.random() < event["chance"]:
+            return {
+                "id": event_id,
+                "effect": event["effect"],
+                "value": event["value"],
+                "desc": event["desc"],
+                "icon": event["icon"]
+            }
+    return None
+
+
+def apply_event_effect(event, game_state):
+    """
+    应用随机事件效果
+
+    Args:
+        event: 事件数据
+        game_state: 游戏状态字典
+
+    Returns:
+        dict: 修改后的游戏状态
+    """
+    if not event:
+        return game_state
+
+    effect = event["effect"]
+    value = event["value"]
+
+    if effect == "exp_mult":
+        game_state["exp_mult"] = game_state.get("exp_mult", 1.0) * value
+    elif effect == "bonus_exp":
+        game_state["bonus_exp"] = game_state.get("bonus_exp", 0) + value
+    elif effect == "combo_mult":
+        game_state["combo_mult"] = game_state.get("combo_mult", 1.0) * value
+    elif effect == "difficulty_down":
+        game_state["difficulty_mod"] = game_state.get("difficulty_mod", 0) - value
+    elif effect == "time_add":
+        game_state["bonus_time"] = game_state.get("bonus_time", 0) + value
+    elif effect == "streak_protect":
+        game_state["streak_protect"] = True
+    elif effect == "golden_mode":
+        game_state["exp_mult"] = game_state.get("exp_mult", 1.0) * 1.5
+        game_state["golden_mode"] = True
+
+    return game_state
+
+
+def calculate_total_exp(base_exp, stats, game_state=None):
+    """
+    计算总经验（包含所有加成）
+
+    Args:
+        base_exp: 基础经验
+        stats: 统计数据
+        game_state: 游戏状态（包含各种加成）
+
+    Returns:
+        tuple: (总经验, 加成明细列表)
+    """
+    game_state = game_state or {}
+    breakdown = []
+
+    total = base_exp
+    breakdown.append(("基础经验", base_exp))
+
+    # 连胜加成
+    streak = stats.get("streak", 0)
+    streak_bonus = get_streak_bonus(streak)
+    if streak_bonus["mult"] > 1:
+        add = int(base_exp * (streak_bonus["mult"] - 1))
+        total += add
+        breakdown.append((f"{streak_bonus['icon']} {streak_bonus['title']}", f"+{add}"))
+
+    # 技能加成
+    skills = stats.get("skills", {})
+    exp_boost = 1 + skills.get("exp_boost", 0) * 0.10
+    if exp_boost > 1:
+        add = int(base_exp * (exp_boost - 1))
+        total += add
+        breakdown.append(("⚡ 经验技能", f"+{add}"))
+
+    # 随机事件加成
+    event_mult = game_state.get("exp_mult", 1.0)
+    if event_mult > 1:
+        add = int(base_exp * (event_mult - 1))
+        total += add
+        breakdown.append(("✨ 事件加成", f"+{add}"))
+
+    # 额外经验
+    bonus_exp = game_state.get("bonus_exp", 0)
+    if bonus_exp > 0:
+        total += bonus_exp
+        breakdown.append(("💰 意外收获", f"+{bonus_exp}"))
+
+    return total, breakdown
+
+
+# ==================== 进度反馈系统函数 ====================
+
+def get_level_progress(stats):
+    """
+    获取升级进度信息
+
+    Args:
+        stats: 统计数据
+
+    Returns:
+        dict: 进度信息
+    """
+    level, cur_exp, need_exp = get_level(stats.get("exp", 0))
+    progress_pct = (cur_exp / need_exp * 100) if need_exp > 0 else 0
+
+    # 计算平均每局经验
+    games = stats.get("games", [])
+    if games:
+        recent = games[-10:]
+        avg_exp = sum(g.get("exp", 0) for g in recent) / len(recent) if recent else 30
+    else:
+        avg_exp = 30
+
+    games_to_level = max(1, int((need_exp - cur_exp) / avg_exp)) if avg_exp > 0 else 1
+
+    return {
+        "level": level,
+        "cur_exp": cur_exp,
+        "need_exp": need_exp,
+        "progress_pct": progress_pct,
+        "games_to_level": games_to_level,
+        "next_level": level + 1
+    }
+
+
+def get_achievement_progress(stats):
+    """
+    获取接近解锁的成就进度
+
+    Args:
+        stats: 统计数据
+
+    Returns:
+        list: 进度列表
+    """
+    unlocked = stats.get("achievements", [])
+    progress_list = []
+
+    total_games = stats.get("total_games", 0)
+    total_chars = stats.get("total_chars", 0)
+    best_net_wpm = stats.get("best_net_wpm", 0)
+    login_days = stats.get("login_days", 0)
+    max_combo = stats.get("max_combo", 0)
+
+    # 检查游戏局数成就
+    game_milestones = [("games_10", 10), ("games_50", 50), ("games_100", 100), ("games_500", 500)]
+    for ach_id, target in game_milestones:
+        if ach_id not in unlocked and total_games > 0:
+            pct = min(100, total_games / target * 100)
+            if pct >= 30:
+                progress_list.append({
+                    "id": ach_id,
+                    "name": ACHIEVEMENTS[ach_id]["name"],
+                    "icon": ACHIEVEMENTS[ach_id]["icon"],
+                    "progress": pct,
+                    "current": total_games,
+                    "target": target
+                })
+
+    # 检查WPM成就
+    wpm_milestones = [("speed_30", 30), ("speed_50", 50), ("speed_80", 80), ("speed_100", 100)]
+    for ach_id, target in wpm_milestones:
+        if ach_id not in unlocked:
+            pct = min(100, best_net_wpm / target * 100)
+            if pct >= 50:
+                progress_list.append({
+                    "id": ach_id,
+                    "name": ACHIEVEMENTS[ach_id]["name"],
+                    "icon": ACHIEVEMENTS[ach_id]["icon"],
+                    "progress": pct,
+                    "current": best_net_wpm,
+                    "target": target
+                })
+
+    # 检查字符成就
+    char_milestones = [("word_10k", 10000), ("word_50k", 50000), ("word_100k", 100000)]
+    for ach_id, target in char_milestones:
+        if ach_id not in unlocked and total_chars > 0:
+            pct = min(100, total_chars / target * 100)
+            if pct >= 30:
+                progress_list.append({
+                    "id": ach_id,
+                    "name": ACHIEVEMENTS[ach_id]["name"],
+                    "icon": ACHIEVEMENTS[ach_id]["icon"],
+                    "progress": pct,
+                    "current": total_chars,
+                    "target": target
+                })
+
+    # 按进度排序，取前3个
+    progress_list.sort(key=lambda x: x["progress"], reverse=True)
+    return progress_list[:3]
+
+
+def get_daily_task_progress(stats):
+    """
+    获取每日任务进度
+
+    Args:
+        stats: 统计数据
+
+    Returns:
+        list: 任务进度列表
+    """
+    check_daily_reset(stats)
+    daily = stats.get("daily", {})
+    tasks = []
+
+    for task in DAILY_TASKS:
+        tid = task["id"]
+        done = daily.get("tasks", {}).get(tid, False)
+
+        if not done:
+            if task["type"] == "games":
+                current = daily.get("games", 0)
+            elif task["type"] == "wpm":
+                # 使用今日最高WPM
+                current = max((g.get("net_wpm", 0) for g in stats.get("games", [])[-20:]
+                              if g.get("mode") != "daily"), default=0)
+            elif task["type"] == "accuracy":
+                current = max((g.get("accuracy", 0) for g in stats.get("games", [])[-20:]
+                              if g.get("mode") != "daily"), default=0)
+            elif task["type"] == "chars":
+                current = max((len(g.get("user_input", "")) for g in stats.get("games", [])[-20:]), default=0)
+            elif task["type"] == "daily_ch":
+                current = 1 if daily.get("daily_ch_done") else 0
+            else:
+                current = 0
+
+            progress = min(100, current / task["target"] * 100) if task["target"] > 0 else 0
+
+            tasks.append({
+                "id": tid,
+                "desc": task["desc"],
+                "reward": task["reward"],
+                "current": current,
+                "target": task["target"],
+                "progress": progress
+            })
+
+    return tasks
+
+
+def generate_weekly_report(stats):
+    """
+    生成周报
+
+    Args:
+        stats: 统计数据
+
+    Returns:
+        dict: 周报数据
+    """
+    from datetime import datetime, timedelta
+
+    games = stats.get("games", [])
+    now = datetime.now()
+    week_ago = now - timedelta(days=7)
+    two_weeks_ago = now - timedelta(days=14)
+
+    # 本周游戏
+    this_week_games = [
+        g for g in games
+        if datetime.fromisoformat(g.get("date", "2000-01-01")) >= week_ago
+    ]
+
+    # 上周游戏
+    last_week_games = [
+        g for g in games
+        if two_weeks_ago <= datetime.fromisoformat(g.get("date", "2000-01-01")) < week_ago
+    ]
+
+    # 本周统计
+    this_week_wpm = [g.get("net_wpm", 0) for g in this_week_games]
+    this_week_acc = [g.get("accuracy", 0) for g in this_week_games]
+
+    # 上周统计
+    last_week_wpm = [g.get("net_wpm", 0) for g in last_week_games]
+    last_week_acc = [g.get("accuracy", 0) for g in last_week_games]
+
+    avg_wpm_this = sum(this_week_wpm) / len(this_week_wpm) if this_week_wpm else 0
+    avg_wpm_last = sum(last_week_wpm) / len(last_week_wpm) if last_week_wpm else 0
+    avg_acc_this = sum(this_week_acc) / len(this_week_acc) if this_week_acc else 0
+    avg_acc_last = sum(last_week_acc) / len(last_week_acc) if last_week_acc else 0
+
+    # 本周成就
+    recent_achievements = []
+    for ach_id in stats.get("achievements", []):
+        # 简化：假设最近添加的成就是本周的
+        if ach_id not in stats.get("achievements", [])[:-10]:
+            recent_achievements.append(ACHIEVEMENTS.get(ach_id, {}).get("name", ach_id))
+
+    # 亮点
+    highlights = []
+    if this_week_wpm and max(this_week_wpm) > (stats.get("best_net_wpm", 0) * 0.9):
+        highlights.append(f"🎯 本周最高WPM: {max(this_week_wpm)}")
+    if len(this_week_games) >= 20:
+        highlights.append(f"🎮 本周游玩{len(this_week_games)}局，坚持练习！")
+    if avg_wpm_this > avg_wpm_last and avg_wpm_last > 0:
+        highlights.append(f"📈 WPM提升 {int(avg_wpm_this - avg_wpm_last)} 点")
+
+    return {
+        "period": "本周",
+        "games_played": len(this_week_games),
+        "total_chars": sum(g.get("chars", 0) for g in this_week_games),
+        "avg_wpm": int(avg_wpm_this),
+        "avg_accuracy": int(avg_acc_this),
+        "best_wpm": max(this_week_wpm) if this_week_wpm else 0,
+        "levels_gained": 0,  # 需要更复杂的计算
+        "achievements_unlocked": recent_achievements[:5],
+        "improvement": {
+            "wpm_change": int(avg_wpm_this - avg_wpm_last),
+            "acc_change": int(avg_acc_this - avg_acc_last),
+        },
+        "highlights": highlights
+    }
+
+
+# ==================== 动态难度系统 ====================
+
+class DynamicDifficulty:
+    """动态难度调整系统"""
+
+    # 难度等级定义 (1-5)
+    DIFFICULTY_LEVELS = {
+        1: {"name": "初级", "color": "92m", "wpm_range": (0, 30), "acc_range": (0, 70)},
+        2: {"name": "中级", "color": "93m", "wpm_range": (30, 50), "acc_range": (70, 85)},
+        3: {"name": "高级", "color": "94m", "wpm_range": (50, 70), "acc_range": (85, 92)},
+        4: {"name": "专家", "color": "95m", "wpm_range": (70, 90), "acc_range": (92, 97)},
+        5: {"name": "大师", "color": "93m", "wpm_range": (90, 200), "acc_range": (97, 100)},
+    }
+
+    def __init__(self, stats):
+        self.stats = stats
+        self.difficulty_range = [1, 5]
+        self.adjustment_threshold = 0.15
+
+    def get_current_difficulty(self):
+        """获取当前动态难度"""
+        base = self._calculate_base_difficulty()
+        adjustment = self._calculate_adjustment()
+        final = base + adjustment
+        return max(1, min(5, round(final, 1)))
+
+    def _calculate_base_difficulty(self):
+        """计算基础难度"""
+        level = self.stats.get("level", 1)
+        avg_wpm = self._get_recent_avg_wpm()
+
+        # 综合等级和速度
+        difficulty = 1 + (level / 15) + (avg_wpm / 80)
+        return min(5, difficulty)
+
+    def _calculate_adjustment(self):
+        """计算难度调整"""
+        recent = self._analyze_recent_performance()
+        if not recent:
+            return 0
+
+        # 根据最近表现调整
+        wpm = recent.get("wpm", 50)
+        acc = recent.get("accuracy", 85)
+
+        adjustment = 0
+
+        # WPM调整
+        if wpm > 80:
+            adjustment += 0.3
+        elif wpm > 60:
+            adjustment += 0.1
+        elif wpm < 30:
+            adjustment -= 0.2
+
+        # 准确率调整
+        if acc > 95:
+            adjustment += 0.2
+        elif acc < 70:
+            adjustment -= 0.3
+
+        return adjustment
+
+    def _get_recent_avg_wpm(self):
+        """获取最近平均WPM"""
+        games = self.stats.get("games", [])[-10:]
+        if not games:
+            return 50
+        return sum(g.get("net_wpm", 0) for g in games) / len(games)
+
+    def _analyze_recent_performance(self):
+        """分析最近表现"""
+        games = self.stats.get("games", [])[-10:]
+        if not games:
+            return None
+
+        avg_wpm = sum(g.get("net_wpm", 0) for g in games) / len(games)
+        avg_acc = sum(g.get("accuracy", 0) for g in games) / len(games)
+
+        return {"wpm": avg_wpm, "accuracy": avg_acc}
+
+    def get_difficulty_name(self, difficulty):
+        """获取难度名称"""
+        level = max(1, min(5, int(difficulty)))
+        return self.DIFFICULTY_LEVELS[level]["name"]
+
+    def get_difficulty_color(self, difficulty):
+        """获取难度颜色代码"""
+        level = max(1, min(5, int(difficulty)))
+        return "\033[" + self.DIFFICULTY_LEVELS[level]["color"]
+
+    def select_text_by_difficulty(self, texts, difficulty):
+        """根据难度选择文本"""
+        # 将难度映射到文本难度级别
+        if difficulty <= 1.5:
+            level = "easy"
+        elif difficulty <= 3:
+            level = "medium"
+        else:
+            level = "hard"
+
+        available = texts.get(level, [])
+        if not available:
+            # 回退到任意可用文本
+            for lvl in ["easy", "medium", "hard"]:
+                if texts.get(lvl):
+                    available = texts[lvl]
+                    break
+
+        return random.choice(available) if available else ""
+
+
+# 全局动态难度实例
+_dynamic_difficulty = None
+
+
+def get_dynamic_difficulty(stats):
+    """获取动态难度实例"""
+    global _dynamic_difficulty
+    if _dynamic_difficulty is None or _dynamic_difficulty.stats != stats:
+        _dynamic_difficulty = DynamicDifficulty(stats)
+    return _dynamic_difficulty
+
+
+def get_adaptive_difficulty(stats):
+    """
+    获取自适应难度值（简化接口）
+
+    Args:
+        stats: 统计数据
+
+    Returns:
+        float: 难度值 (1.0 - 5.0)
+    """
+    dd = get_dynamic_difficulty(stats)
+    return dd.get_current_difficulty()

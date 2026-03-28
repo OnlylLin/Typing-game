@@ -26,7 +26,9 @@ BOSSES = {
         "skills": ["普通攻击"],
         "vocab_level": "easy",
         "icon": "🟢",
-        "description": "软弱的史莱姆之王，新手试炼"
+        "description": "软弱的史莱姆之王，新手试炼",
+        "type": "平衡型",
+        "weaknesses": ["speed", "first_strike"]
     },
     3: {
         "name": "暗影蝙蝠",
@@ -35,7 +37,9 @@ BOSSES = {
         "skills": ["普通攻击", "毒害攻击"],
         "vocab_level": "medium",
         "icon": "🦇",
-        "description": "来自黑暗洞穴的吸血蝙蝠"
+        "description": "来自黑暗洞穴的吸血蝙蝠",
+        "type": "速度型",
+        "weaknesses": ["accuracy", "combo"]
     },
     5: {
         "name": "骷髅战士",
@@ -44,7 +48,9 @@ BOSSES = {
         "skills": ["普通攻击", "重击攻击"],
         "vocab_level": "medium",
         "icon": "💀",
-        "description": "不死的骷髅战士，守卫古墓"
+        "description": "不死的骷髅战士，守卫古墓",
+        "type": "防御型",
+        "weaknesses": ["speed", "first_strike"]
     },
     8: {
         "name": "暗影刺客",
@@ -53,7 +59,9 @@ BOSSES = {
         "skills": ["普通攻击", "毒害攻击", "盲眼攻击"],
         "vocab_level": "medium",
         "icon": "🗡️",
-        "description": "隐匿于暗处的致命刺客"
+        "description": "隐匿于暗处的致命刺客",
+        "type": "速度型",
+        "weaknesses": ["accuracy", "perfect"]
     },
     10: {
         "name": "烈焰魔龙",
@@ -62,7 +70,9 @@ BOSSES = {
         "skills": ["普通攻击", "重击攻击", "盲眼攻击"],
         "vocab_level": "hard",
         "icon": "🐉",
-        "description": "喷吐烈焰的远古巨龙"
+        "description": "喷吐烈焰的远古巨龙",
+        "type": "魔法型",
+        "weaknesses": ["word_master", "combo"]
     },
     13: {
         "name": "寒冰女王",
@@ -71,7 +81,9 @@ BOSSES = {
         "skills": ["普通攻击", "毒害攻击", "冰冻攻击"],
         "vocab_level": "hard",
         "icon": "❄️",
-        "description": "永冻之地的冰雪女王"
+        "description": "永冻之地的冰雪女王",
+        "type": "魔法型",
+        "weaknesses": ["speed", "perfect"]
     },
     15: {
         "name": "死灵法师",
@@ -80,7 +92,9 @@ BOSSES = {
         "skills": ["普通攻击", "毒害攻击", "盲眼攻击", "召唤亡灵"],
         "vocab_level": "hard",
         "icon": "🔮",
-        "description": "操控死亡的邪恶法师"
+        "description": "操控死亡的邪恶法师",
+        "type": "魔法型",
+        "weaknesses": ["combo", "first_strike"]
     },
     18: {
         "name": "地狱三头犬",
@@ -89,7 +103,9 @@ BOSSES = {
         "skills": ["普通攻击", "重击攻击", "烈焰吐息"],
         "vocab_level": "expert",
         "icon": "🐕",
-        "description": "守卫地狱之门的三头恶犬"
+        "description": "守卫地狱之门的三头恶犬",
+        "type": "防御型",
+        "weaknesses": ["accuracy", "word_master"]
     },
     20: {
         "name": "暗黑骑士",
@@ -98,7 +114,9 @@ BOSSES = {
         "skills": ["普通攻击", "重击攻击", "毒害攻击", "黑暗护盾"],
         "vocab_level": "expert",
         "icon": "⚔️",
-        "description": "堕落的圣骑士，被黑暗吞噬"
+        "description": "堕落的圣骑士，被黑暗吞噬",
+        "type": "防御型",
+        "weaknesses": ["speed", "combo"]
     },
     25: {
         "name": "远古巨像",
@@ -107,7 +125,9 @@ BOSSES = {
         "skills": ["普通攻击", "重击攻击", "地震"],
         "vocab_level": "expert",
         "icon": "🗿",
-        "description": "上古文明创造的战争机器"
+        "description": "上古文明创造的战争机器",
+        "type": "防御型",
+        "weaknesses": ["first_strike", "perfect"]
     },
     30: {
         "name": "深渊领主",
@@ -116,7 +136,9 @@ BOSSES = {
         "skills": ["普通攻击", "毒害攻击", "重击攻击", "盲眼攻击", "深渊凝视"],
         "vocab_level": "master",
         "icon": "👹",
-        "description": "深渊的统治者，终极挑战"
+        "description": "深渊的统治者，终极挑战",
+        "type": "魔法型",
+        "weaknesses": ["speed", "accuracy", "combo", "perfect"]
     },
 }
 
@@ -161,6 +183,40 @@ PLAYER_SKILLS = {
         "value": 1,
         "cooldown": 2,
         "description": "解除中毒状态"
+    },
+    # 新增技能
+    "POWER_STRIKE": {
+        "name": "重击",
+        "icon": "💥",
+        "effect": "damage_mult",
+        "value": 1.5,
+        "cooldown": 3,
+        "description": "下次攻击伤害+50%"
+    },
+    "HEAL_OVER_TIME": {
+        "name": "持续恢复",
+        "icon": "💚",
+        "effect": "regen",
+        "value": 10,
+        "duration": 3,
+        "cooldown": 5,
+        "description": "3回合内每回合恢复10HP"
+    },
+    "DISPEL": {
+        "name": "净化",
+        "icon": "✨",
+        "effect": "cleanse",
+        "value": 1,
+        "cooldown": 4,
+        "description": "移除所有负面状态"
+    },
+    "EVADE": {
+        "name": "闪避",
+        "icon": "💨",
+        "effect": "dodge",
+        "duration": 1,
+        "cooldown": 6,
+        "description": "下回合闪避Boss攻击"
     },
 }
 
@@ -252,6 +308,9 @@ class Player:
         # Buff
         self.critical_next = False  # 下次暴击
         self.attack_bonus = 0       # 攻击力加成
+        self.regen = 0              # 持续恢复剩余回合
+        self.regen_amount = 0       # 每回合恢复量
+        self.dodge_next = False     # 下回合闪避
 
     @property
     def attack(self):
@@ -335,7 +394,7 @@ class Player:
         self.skill_cooldowns[skill_name] = skill["cooldown"]
 
         effect = skill["effect"]
-        value = skill["value"]
+        value = skill.get("value", 0)
 
         if effect == "heal":
             healed = self.heal(value)
@@ -352,6 +411,22 @@ class Player:
             self.poison = 0
             self.burn = 0
             return True, "解除了所有负面状态"
+        elif effect == "damage_mult":
+            self.attack_bonus = int(self.base_attack * (value - 1))
+            return True, f"下次攻击伤害+{int((value-1)*100)}%"
+        elif effect == "regen":
+            self.regen = skill.get("duration", 3)
+            self.regen_amount = value
+            return True, f"{skill.get('duration', 3)}回合内每回合恢复{value}HP"
+        elif effect == "cleanse":
+            self.poison = 0
+            self.burn = 0
+            self.stunned = False
+            self.fear = 0
+            return True, "净化了所有负面状态"
+        elif effect == "dodge":
+            self.dodge_next = True
+            return True, "下回合将闪避Boss攻击"
 
         return False, "技能效果未知"
 
@@ -384,6 +459,74 @@ class Player:
 
 # ==================== Boss类 ====================
 
+# 弱点类型定义
+WEAKNESS_TYPES = {
+    "speed": {"name": "速度弱点", "icon": "⚡", "desc": "快速输入造成双倍伤害", "condition": "wpm >= 80"},
+    "accuracy": {"name": "精准弱点", "icon": "🎯", "desc": "连续正确输入造成双倍伤害", "condition": "连续10次正确"},
+    "combo": {"name": "连击弱点", "icon": "🔥", "desc": "高连击时造成双倍伤害", "condition": "combo >= 30"},
+    "first_strike": {"name": "先手弱点", "icon": "⚔️", "desc": "第一回合攻击双倍伤害", "condition": "第一回合"},
+    "word_master": {"name": "词汇弱点", "icon": "📚", "desc": "正确拼写长单词双倍伤害", "condition": "单词长度>=8"},
+    "perfect": {"name": "完美弱点", "icon": "💎", "desc": "100%正确率时双倍伤害", "condition": "正确率100%"},
+}
+
+
+class BossWeakness:
+    """Boss弱点系统"""
+
+    def __init__(self, weakness_types):
+        self.weakness_types = weakness_types  # 弱点类型列表
+        self.active_weakness = None  # 当前激活的弱点
+        self.weakness_hit = False  # 是否命中弱点
+        self.weakness_multiplier = 2.0  # 弱点伤害倍率
+
+    def generate_weakness(self, boss_type):
+        """根据Boss类型生成弱点"""
+        if not self.weakness_types:
+            # 根据Boss类型自动选择弱点
+            type_weakness_map = {
+                "速度型": ["accuracy", "combo"],
+                "防御型": ["speed", "first_strike"],
+                "魔法型": ["perfect", "word_master"],
+                "平衡型": ["speed", "accuracy", "combo"],
+            }
+            self.weakness_types = type_weakness_map.get(boss_type, ["speed", "accuracy"])
+
+        # 随机选择一个弱点激活
+        if self.weakness_types:
+            self.active_weakness = random.choice(self.weakness_types)
+        return self.active_weakness
+
+    def check_weakness_hit(self, game_state):
+        """检查是否命中弱点"""
+        if not self.active_weakness:
+            return False
+
+        weakness = self.active_weakness
+        hit = False
+
+        if weakness == "speed":
+            hit = game_state.get("wpm", 0) >= 80
+        elif weakness == "accuracy":
+            hit = game_state.get("streak", 0) >= 10
+        elif weakness == "combo":
+            hit = game_state.get("combo", 0) >= 30
+        elif weakness == "first_strike":
+            hit = game_state.get("turn", 0) == 1
+        elif weakness == "word_master":
+            hit = game_state.get("word_length", 0) >= 8
+        elif weakness == "perfect":
+            hit = game_state.get("accuracy", 0) == 100
+
+        self.weakness_hit = hit
+        return hit
+
+    def get_weakness_info(self):
+        """获取弱点信息"""
+        if not self.active_weakness:
+            return None
+        return WEAKNESS_TYPES.get(self.active_weakness, {})
+
+
 class Boss:
     """Boss类"""
 
@@ -400,6 +543,11 @@ class Boss:
         self.shield = 0
         self.frozen = False
 
+        # 弱点系统
+        weakness_list = boss_data.get("weaknesses", [])
+        self.weakness = BossWeakness(weakness_list)
+        self.weakness.generate_weakness(boss_data.get("type", "平衡型"))
+
     @property
     def attack(self):
         return self.base_attack
@@ -408,11 +556,14 @@ class Boss:
     def is_alive(self):
         return self.hp > 0
 
-    def take_damage(self, damage):
-        """受到伤害"""
+    def take_damage(self, damage, hit_weakness=False):
+        """受到伤害（支持弱点）"""
+        if hit_weakness:
+            damage = int(damage * self.weakness.weakness_multiplier)
+
         if self.shield > 0:
             self.shield -= 1
-            return 0, True
+            return 0, True  # 护盾抵消
 
         self.hp = max(0, self.hp - damage)
         return damage, False

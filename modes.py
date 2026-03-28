@@ -10,7 +10,8 @@ from ui import (
     c, C, DarkTheme, bar_fg, exp_bar, separator, wpm_color, acc_color,
     get_rating, get_rpg_title, clear_screen, diff_display, hp_bar,
     celebrate_boss_defeat, celebrate_perfect, attack_flash, heal_effect,
-    shield_effect, freeze_effect, loading_animation, draw_box
+    shield_effect, freeze_effect, loading_animation, draw_box,
+    draw_result_card, Celebrations, Transitions, get_rank_display
 )
 from data import (
     TEXTS, WORD_BANKS, DAILY_POOL, ACHIEVEMENTS, SKILLS, DAILY_TASKS,
@@ -33,28 +34,27 @@ from quiz_system import play_quiz_level, boss_cloze_challenge
 def show_result(target, user_input, elapsed, wpm, net_wpm, accuracy,
                 rating, rating_col, text, icon, exp_gain,
                 old_level, level, new_ach, daily_tasks=None, combo=0,
-                mode="", prev_best_net=0, ghost_beat=False):
-    """显示游戏结果"""
+                mode="", prev_best_net=0, ghost_beat=False, reward_info=None):
+    """显示游戏结果（卡片式设计）"""
+    from ui import draw_result_card, Celebrations, Transitions, get_rank_display, bar_fg
+
     clear_screen()
-    print(separator("═"))
-    print(c("  游戏结果", C.BCYAN, C.BOLD))
-    print(separator("─"))
 
-    r_target, r_typed = diff_display(target, user_input)
-    print(f" {c('目标', C.BBLACK)}: {r_target}")
-    print(f" {c('输入', C.BBLACK)}: {r_typed}")
-    print(separator("─"))
+    # 进入结果动画
+    Transitions.scanline(0.15)
 
-    wc = wpm_color(net_wpm)
-    ac = acc_color(accuracy)
-    print(
-        f"  ⏱  {c(f'{elapsed:.2f}s', C.BCYAN)}"
-        f"   ⚡{c(str(net_wpm)+'净WPM', wc, C.BOLD)}"
-        f"  {c('(毛'+str(wpm)+')', C.BBLACK)}"
-        f"   🎯{c(str(accuracy)+'%', ac)}"
-        f"   🔥{c('x'+str(combo), C.BMAGENTA)}"
+    # 绘制结果卡片
+    rank, rank_title, rank_color, rank_icon = get_rank_display(net_wpm, accuracy)
+    is_new_record = prev_best_net > 0 and net_wpm > prev_best_net
+
+    card = draw_result_card(
+        target, user_input, elapsed, wpm, net_wpm, accuracy,
+        rating, text, rating_col, exp_gain, combo,
+        prev_best_net, is_new_record
     )
+    print(card)
 
+    # 历史对比
     if prev_best_net > 0:
         diff_v = net_wpm - prev_best_net
         diff_s = (c(f"+{diff_v}", C.BGREEN) if diff_v >= 0 else c(str(diff_v), C.BRED))
@@ -62,27 +62,76 @@ def show_result(target, user_input, elapsed, wpm, net_wpm, accuracy,
     if ghost_beat:
         print(c("  👻 击败幽灵记录！经验 x1.5！", C.BMAGENTA, C.BOLD))
 
-    print(separator("─"))
-    print(f"  {icon}  {rating_col}  {c(text, C.BOLD)}")
-
+    # 等级显示
+    print(separator("─", 56, C.BBLACK))
     lv_str = (c(f"Lv.{old_level}", C.BYELLOW) + " ➜ " + c(f"Lv.{level}", C.BGREEN, C.BOLD)
               if level > old_level else c(f"Lv.{level}", C.BYELLOW))
     print(f"  {c('+'+str(exp_gain)+'XP', C.BGREEN)}  {lv_str}")
 
+    # 升级动画
+    if level > old_level:
+        Celebrations.level_up(old_level, level)
+
+    # 显示奖励详情
+    if reward_info:
+        print(separator("─", 56, C.BBLACK))
+        print(c("  🎁 奖励明细", C.BCYAN, C.BOLD))
+
+        # 随机事件
+        if reward_info.get("random_event"):
+            evt = reward_info["random_event"]
+            print(f"    {c('🎲 随机事件:', C.BYELLOW)} {evt.get('name', '神秘')}")
+            if evt.get("exp_mult", 1) != 1:
+                print(f"      {c('经验 x'+str(evt['exp_mult']), C.BGREEN)}")
+
+        # 首次奖励
+        if reward_info.get("first_rewards"):
+            for fr in reward_info["first_rewards"]:
+                # fr 是 (reward_key, reward_data) 元组
+                reward_key, reward_data = fr
+                icon_map = {"first_game": "🎮", "first_boss": "🐉", "first_perfect": "✨",
+                           "first_ghost": "👻", "first_daily": "📅", "first_combo": "🔥",
+                           "first_classic": "🎮", "first_word": "📝", "first_timed": "⏱️",
+                           "first_sprint": "⚡", "first_blind": "🙈", "first_gauntlet": "⚔️",
+                           "first_speed_100": "🚀"}
+                ri = icon_map.get(reward_key, "⭐")
+                print(f"    {ri} {c(reward_data.get('desc', '首次'), C.BMAGENTA)} {c('+'+str(reward_data.get('exp', 0))+'XP', C.BGREEN)}")
+
+        # 挑战奖励
+        if reward_info.get("challenge_rewards"):
+            for cr in reward_info["challenge_rewards"]:
+                print(f"    🏅 {c(cr.get('name', '挑战'), C.BYELLOW)} {c('+'+str(cr.get('exp', 0))+'XP', C.BGREEN)}")
+
+        # 连胜奖励
+        if reward_info.get("streak_bonus", 0) > 0:
+            print(f"    🔥 {c('连胜奖励', C.BRED)} {c('+'+str(reward_info['streak_bonus'])+'XP', C.BGREEN)}")
+
+        # 总计
+        total = reward_info.get("total_exp", exp_gain)
+        base = reward_info.get("base_exp", exp_gain)
+        if total != base:
+            print(f"    {c('基础经验:', C.BBLACK)} {base} → {c('总计: '+str(total), C.BGREEN, C.BOLD)}")
+
     if daily_tasks:
-        print(separator("─"))
+        print(separator("─", 56, C.BBLACK))
         print(c("  📋 每日任务完成！", C.BYELLOW))
         for task in daily_tasks:
             print(f"    ✅ {task['desc']}  {c('+'+str(task['reward'])+'XP', C.BGREEN)}")
 
     if new_ach:
-        print(separator("─"))
+        print(separator("─", 56, C.BBLACK))
         print(c("  🏆 成就解锁！", C.BYELLOW, C.BOLD))
         for a in new_ach:
+            # 成就解锁动画
+            Celebrations.achievement_unlock(ACHIEVEMENTS[a]['name'], ACHIEVEMENTS[a]['icon'])
             print(f"    {ACHIEVEMENTS[a]['icon']} {c(ACHIEVEMENTS[a]['name'], C.BMAGENTA, C.BOLD)}"
                   f"  {c(ACHIEVEMENTS[a]['desc'], C.BBLACK)}")
 
-    print(separator("═"))
+    # 新纪录庆祝
+    if is_new_record:
+        Celebrations.new_record("净WPM", net_wpm)
+
+    print(separator("═", 56, DarkTheme.GOLD_YELLOW))
     input(c("\n按 Enter 继续...", C.BBLACK))
 
 
@@ -196,13 +245,14 @@ def play_classic():
                       target, user_input, elapsed, difficulty=difficulty,
                       ghost_beat=ghost_beat,
                       realtime_max_combo=rt_max_combo, realtime_is_perfect=rt_is_perfect)
-    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy = res
+    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy, reward_info = res
 
     rating, text, rating_col, icon = get_rating(net_wpm, accuracy)
     show_result(target, user_input, elapsed, wpm, net_wpm, accuracy,
                 rating, rating_col, text, icon, exp_gain,
                 old_lv, new_lv, new_ach, daily_done, combo,
-                mode="classic", prev_best_net=prev_best, ghost_beat=ghost_beat)
+                mode="classic", prev_best_net=prev_best, ghost_beat=ghost_beat,
+                reward_info=reward_info)
 
 
 def play_sprint():
@@ -265,7 +315,7 @@ def play_sprint():
     prev_best  = stats.get("mode_bests", {}).get("sprint", {}).get("net_wpm", 0)
     ghost_beat = raw_wpm > prev_best and prev_best > 0
 
-    new_ach, daily_done, old_lv, new_lv, exp_gain, _, wpm, net_wpm, _ = finish_game(
+    new_ach, daily_done, old_lv, new_lv, exp_gain, _, wpm, net_wpm, _, reward_info = finish_game(
         stats, "sprint", raw_wpm, raw_wpm, 100, exp_base,
         chars=total_correct, completed=completed, difficulty="",
         ghost_beat=ghost_beat)
@@ -323,12 +373,13 @@ def play_blind():
     exp_base = 15 + raw_wpm // 10 + raw_acc // 10
     res = finish_game(stats, "blind", raw_wpm, raw_net_wpm, raw_acc, exp_base,
                       target, user_input, elapsed, difficulty="")
-    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy = res
+    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy, reward_info = res
 
     rating, text, rating_col, icon = get_rating(net_wpm, accuracy)
     show_result(target, user_input, elapsed, wpm, net_wpm, accuracy,
                 rating, rating_col, text, icon, exp_gain,
-                old_lv, new_lv, new_ach, daily_done, combo)
+                old_lv, new_lv, new_ach, daily_done, combo,
+                reward_info=reward_info)
 
 
 def play_word_practice():
@@ -379,12 +430,13 @@ def play_word_practice():
     res = finish_game(stats, "word", raw_wpm, raw_net_wpm, raw_acc, exp_base,
                       words, user_input, elapsed, difficulty="",
                       realtime_max_combo=rt_max_combo, realtime_is_perfect=rt_is_perfect)
-    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy = res
+    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy, reward_info = res
 
     rating, text, rating_col, icon = get_rating(net_wpm, accuracy)
     show_result(words, user_input, elapsed, wpm, net_wpm, accuracy,
                 rating, rating_col, text, icon, exp_gain,
-                old_lv, new_lv, new_ach, daily_done, combo)
+                old_lv, new_lv, new_ach, daily_done, combo,
+                reward_info=reward_info)
 
 
 def play_timed():
@@ -448,7 +500,7 @@ def play_timed():
     exp_base = 15 + completed * 5 + raw_wpm // 10
     stats["total_chars"] = stats.get("total_chars", 0) + total_correct
 
-    new_ach, daily_done, old_lv, new_lv, exp_gain, _, wpm, _, _ = finish_game(
+    new_ach, daily_done, old_lv, new_lv, exp_gain, _, wpm, _, _, reward_info = finish_game(
         stats, "timed", raw_wpm, raw_wpm, 100, exp_base,
         chars=total_correct, completed=completed, difficulty="")
 
@@ -544,7 +596,7 @@ def play_gauntlet():
     exp_base = (40 + avg_wpm // 5) if alive else (10 + avg_wpm // 10)
     mode     = "gauntlet" if alive else "classic"
 
-    new_ach, daily_done, old_lv, new_lv, exp_gain, _, _, _, _ = finish_game(
+    new_ach, daily_done, old_lv, new_lv, exp_gain, _, _, _, _, reward_info = finish_game(
         stats, mode, avg_wpm, avg_wpm, avg_acc, exp_base, difficulty="")
 
     clear_screen()
@@ -630,12 +682,13 @@ def play_weak_key():
     res = finish_game(stats, "weak", raw_wpm, raw_net_wpm, raw_acc, exp_base,
                       target, user_input, elapsed, difficulty="",
                       realtime_max_combo=rt_max_combo, realtime_is_perfect=rt_is_perfect)
-    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy = res
+    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy, reward_info = res
 
     rating, text, rating_col, icon = get_rating(net_wpm, accuracy)
     show_result(target, user_input, elapsed, wpm, net_wpm, accuracy,
                 rating, rating_col, text, icon, exp_gain,
-                old_lv, new_lv, new_ach, daily_done, combo)
+                old_lv, new_lv, new_ach, daily_done, combo,
+                reward_info=reward_info)
 
 
 def play_daily_challenge():
@@ -691,12 +744,13 @@ def play_daily_challenge():
     res = finish_game(stats, "daily", raw_wpm, raw_net_wpm, raw_acc, exp_base,
                       target, user_input, elapsed, difficulty="", is_daily_ch=is_dc,
                       realtime_max_combo=rt_max_combo, realtime_is_perfect=rt_is_perfect)
-    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy = res
+    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy, reward_info = res
 
     rating, text, rating_col, icon = get_rating(net_wpm, accuracy)
     show_result(target, user_input, elapsed, wpm, net_wpm, accuracy,
                 rating, rating_col, text, icon, exp_gain,
-                old_lv, new_lv, new_ach, daily_done, combo, mode="daily")
+                old_lv, new_lv, new_ach, daily_done, combo, mode="daily",
+                reward_info=reward_info)
 
 
 def play_ghost_race():
@@ -776,13 +830,14 @@ def play_ghost_race():
                       target, user_input, elapsed, difficulty=difficulty,
                       ghost_beat=ghost_beat,
                       realtime_max_combo=rt_max_combo, realtime_is_perfect=rt_is_perfect)
-    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy = res
+    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy, reward_info = res
 
     rating, text, rating_col, icon = get_rating(net_wpm, accuracy)
     show_result(target, user_input, elapsed, wpm, net_wpm, accuracy,
                 rating, rating_col, text, icon, exp_gain,
                 old_lv, new_lv, new_ach, daily_done, combo,
-                mode="classic", prev_best_net=ghost_wpm, ghost_beat=ghost_beat)
+                mode="classic", prev_best_net=ghost_wpm, ghost_beat=ghost_beat,
+                reward_info=reward_info)
 
 
 def play_paragraph():
@@ -829,12 +884,13 @@ def play_paragraph():
     res = finish_game(stats, "paragraph", raw_wpm, raw_net_wpm, raw_acc, exp_base,
                       target, user_input, elapsed, difficulty="hard", is_para=True,
                       realtime_max_combo=rt_max_combo, realtime_is_perfect=rt_is_perfect)
-    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy = res
+    new_ach, daily_done, old_lv, new_lv, exp_gain, combo, wpm, net_wpm, accuracy, reward_info = res
 
     rating, text, rating_col, icon = get_rating(net_wpm, accuracy)
     show_result(target, user_input, elapsed, wpm, net_wpm, accuracy,
                 rating, rating_col, text, icon, exp_gain,
-                old_lv, new_lv, new_ach, daily_done, combo)
+                old_lv, new_lv, new_ach, daily_done, combo,
+                reward_info=reward_info)
 
 
 # ==================== Boss关卡模式 ====================
